@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { fetchPokemoneListData } from "../../services/fetchPokemonListData";
 import { useNavigate } from "react-router-dom";
+import useFetchPokemon from "../../hooks/useFetchPokemon";
 
 function Pokemon() {
 
@@ -10,19 +11,7 @@ function Pokemon() {
 
   const navigate = useNavigate()
 
-  // React Query Call
-  const {
-    data: pokeList,
-    isLoading,
-    isError,
-    error,
-    isFetching,
-  } = useQuery({
-    queryKey: ["pokemons", offset],
-    queryFn: () => fetchPokemoneListData({offset}),
-    cacheTime: 1000 * 60 * 2,
-    staleTime: 1000 * 60 * 2,
-  });
+  const {pokeList, isLoading, isError, error, isFetching} = useFetchPokemon({offset})
 
   function handleClickRedirect(id) {
     navigate(`/details/${id}`)

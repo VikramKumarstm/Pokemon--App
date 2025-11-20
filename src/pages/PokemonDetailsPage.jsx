@@ -2,19 +2,13 @@ import { useQuery } from '@tanstack/react-query'
 import React from 'react'
 import { fetchPokemonDetails } from '../services/fetchPokemonDetails'
 import { useParams } from 'react-router-dom'
+import useFetchPokemonDetails from '../hooks/useFetchPokemonDetails';
 
 function PokemonDetailsPage() {
 
   const {id} = useParams();
 
-  const {data: pokemon, isError, error, isLoading} = useQuery({
-    queryKey: ["pokemon", id],
-    queryFn: () => fetchPokemonDetails({id}),
-    cacheTime: 1000*60*2,
-    staleTime: 1000*60*2
-  })
-
-  console.log("DATA :", pokemon)
+  const {pokemon, isError, error, isLoading} = useFetchPokemonDetails({id})
 
   if(isLoading) return <div>Loading...</div>
 

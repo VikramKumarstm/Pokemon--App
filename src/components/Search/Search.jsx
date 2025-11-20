@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { fetchPokemoneListData } from '../../services/fetchPokemonListData';
+import useFetchPokemon from '../../hooks/useFetchPokemon';
 
 function Search() {
 
@@ -13,17 +14,7 @@ function Search() {
     const navigate = useNavigate();
 
 
-    const {
-        data: pokeList,
-        isLoading,
-        isError,
-        error,
-    } = useQuery({
-        queryKey: ["pokemons", offset],
-        queryFn: () => fetchPokemoneListData({offset}),
-        cacheTime: 1000 * 60 * 2,
-        staleTime: 1000 * 60 * 2,
-    });
+    const {pokeList, isLoading, isError, error} = useFetchPokemon({offset})
 
     function onChangeHandler(event) {
         const value = event.target.value;
